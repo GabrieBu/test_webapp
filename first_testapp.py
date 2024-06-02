@@ -35,15 +35,13 @@ def tick_all_checkboxes(driver):
                     if not checkbox.is_selected():
                         checkbox.click()
                         all_checkboxes_ticked = False
-                
-                time.sleep(1)
+                    time.sleep(1)
             
             print("All checkboxes are now ticked.")
         else:
             print("No checkboxes found.")
         
     except Exception as e:
-        # If the timeout is reached or another error occurs, log the message and continue
         print(f"No checkboxes found or encountered an issue: {e}")
 
 
@@ -104,11 +102,14 @@ def add_dish_and_submit(driver):
             driver.find_element(By.ID, notes_input_id).send_keys(f'This is a note for the dish.')
             if i % 2 == 0:
                 click_button("increase", driver)
-
+            time.sleep(2)
 
             click_button("add_to_order", driver)
+            time.sleep(2)
             click_button("back", driver)
+            time.sleep(2)
         click_button("order", driver)
+        time.sleep(2)
         select_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "num_table"))
         )
@@ -154,11 +155,15 @@ def admin_confirm_payment(num_order):
     click_button("Payments", driver_staff)
     time.sleep(1)
     click_button(f"div_order_{str(num_order)}", driver_staff)
+    time.sleep(1)
     click_button(str(num_order), driver_staff)
+    time.sleep(1)
+    driver_staff.refresh()
+    time.sleep(1)
 
 
 def main():
-    num_order = 252
+    num_order = 262
     try:
         driver = webdriver.Chrome()
         login_user(driver)
@@ -174,3 +179,6 @@ def main():
 
 
 main()
+
+
+# https://github.com/GabrieBu/test_webapp
